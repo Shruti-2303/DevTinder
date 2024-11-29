@@ -6,11 +6,12 @@ const express = require("express");
 const app = express();
 
 app.use(express.json());
-app.delete("/delete", async(req,res) => {
+app.patch("/update",async (req, res) => {
     const userId = req.body.userId;
+    const data = req.body;
     try{
-        const user = await User.findByIdAndDelete(userId);
-        res.send("User deleted successfully");
+        await User.findByIdAndUpdate(userId,data);
+        res.send("User updated successfully");
     }catch(err){
         res.status(400).send("Something went wrong" + err.message);
     }
