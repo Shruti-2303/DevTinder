@@ -10,7 +10,7 @@ app.patch("/update",async (req, res) => {
     const userId = req.body.userId;
     const data = req.body;
     try{
-        await User.findByIdAndUpdate(userId,data);
+        await User.findByIdAndUpdate(userId,data,{runValidators : true});
         res.send("User updated successfully");
     }catch(err){
         res.status(400).send("Something went wrong" + err.message);
@@ -40,8 +40,8 @@ app.post("/signup", async (req, res) => {
     try{
         await user.save();
         res.send("User signed up successfully");
-    }catch{
-        res.status(500).send("Something went wrong");
+    }catch(err){
+        res.status(500).send("Something went wrong" + err.message);
     }
     
     
